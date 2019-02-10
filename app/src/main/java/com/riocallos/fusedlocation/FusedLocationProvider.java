@@ -16,12 +16,6 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
-import therapist.spanda.com.AppState;
-
-
-/**
- * Created by racallos on 9/7/15.
- */
 public class FusedLocationProvider implements LocationListener {
 
     private String TAG = FusedLocationProvider.class.getSimpleName();
@@ -38,7 +32,7 @@ public class FusedLocationProvider implements LocationListener {
     
     public abstract interface LocationResultCallback {
 
-        //public void getNewStatus(int status);
+        public void getNewStatus(int status);
         public void getNewFusedLocation(Location location);
 
     }
@@ -48,13 +42,13 @@ public class FusedLocationProvider implements LocationListener {
         this.context = context;
         this.locationResultCallback = locationResultCallback;
     
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient( this.context);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.context);
 
     }
 
     public void connect() {
 
-        System.out.println("FusedLocationProvider.connect()");
+        Log.e(TAG, "FusedLocationProvider.connect()");
         
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M || ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
         
@@ -104,10 +98,9 @@ public class FusedLocationProvider implements LocationListener {
 
         Log.e(TAG,"FusedLocationProvider.onLocationChanged()");
 
-        if(location != null) {
+        if(locationResultCallback != null) {
 
-            AppState.getInstance().setValue(AppState.KEY_LATITUDE, String.valueOf(location.getLatitude()));
-            AppState.getInstance().setValue(AppState.KEY_LONGITUDE, String.valueOf(location.getLongitude()));
+            locationResultCallback.getNewFusedLocation(location);
 
         }
         
@@ -118,8 +111,11 @@ public class FusedLocationProvider implements LocationListener {
 
         Log.e(TAG,"FusedLocationProvider.onStatusChanged()");
 
-        //locationResultCallback.getNewStatus(status);
+        if(locationResultCallback != null) {
 
+            locationResultCallback.getNewStatus(status);
+
+        }
 
     }
 
