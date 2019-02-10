@@ -74,7 +74,7 @@ public class MapActivity extends AppCompatActivity implements FusedLocationProvi
     public void onResume(){
 
         super.onResume();
-        
+
         mapView.onResume();
 
     }
