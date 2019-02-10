@@ -1,2 +1,2 @@
-# fusedlocation
-Fused Location Sample Android App
+# Fused Location
+Sample Android App using Fused Location
