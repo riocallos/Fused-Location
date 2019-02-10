@@ -2,10 +2,9 @@
 
 Sample Android app using fused location.
 
+## Author
 
-## Authors
-
-* **Rio Marie A. Callos**
+Rio Marie A. Callos
 
 ## License
 
